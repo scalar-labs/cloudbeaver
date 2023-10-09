@@ -16,16 +16,12 @@
  */
 package io.cloudbeaver.auth.provisioning;
 
-import io.cloudbeaver.model.session.WebSession;
-import org.jkiss.code.NotNull;
-import org.jkiss.dbeaver.DBException;
-import org.jkiss.dbeaver.model.security.SMAuthProviderCustomConfiguration;
+public class PaginationPageInfo {
+    String endCursor;
+    boolean hasNextPage;
 
-public interface SMProvisioner {
-    @NotNull
-    PaginationUser listExternalUsers(
-        @NotNull WebSession webSession,
-        @NotNull SMAuthProviderCustomConfiguration customConfiguration,
-        @NotNull SMProvisioningFilter filter
-    ) throws DBException;
+    public PaginationPageInfo(String endCursor, boolean hasNextPage) {
+        this.endCursor = endCursor;
+        this.hasNextPage = hasNextPage;
+    }
 }

@@ -16,16 +16,24 @@
  */
 package io.cloudbeaver.auth.provisioning;
 
-import io.cloudbeaver.model.session.WebSession;
-import org.jkiss.code.NotNull;
-import org.jkiss.dbeaver.DBException;
-import org.jkiss.dbeaver.model.security.SMAuthProviderCustomConfiguration;
+import org.jkiss.dbeaver.model.security.user.SMUserProvisioning;
 
-public interface SMProvisioner {
-    @NotNull
-    PaginationUser listExternalUsers(
-        @NotNull WebSession webSession,
-        @NotNull SMAuthProviderCustomConfiguration customConfiguration,
-        @NotNull SMProvisioningFilter filter
-    ) throws DBException;
+import java.util.List;
+
+public class PaginationUser {
+    List<SMUserProvisioning> smUserProvisioning;
+    PaginationPageInfo pageInfo;
+
+    public PaginationUser(List<SMUserProvisioning> smUserProvisioning, PaginationPageInfo pageInfo) {
+        this.smUserProvisioning = smUserProvisioning;
+        this.pageInfo = pageInfo;
+    }
+
+    public List<SMUserProvisioning> getSmUserProvisioning() {
+        return smUserProvisioning;
+    }
+
+    public PaginationPageInfo getPageInfo() {
+        return pageInfo;
+    }
 }
