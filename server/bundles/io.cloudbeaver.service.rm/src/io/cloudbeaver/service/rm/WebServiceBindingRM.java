@@ -64,6 +64,13 @@ public class WebServiceBindingRM extends WebServiceBindingBase<DBWServiceRM> {
                 getWebSession(env),
                 env.getArgument("subjectId")
             ))
+            .dataFetcher(
+                "rmUserProjectSettings", env -> getService(env).getProjectSettings(
+                    getWebSession(env),
+                    env.getArgument("projectId"),
+                    env.getArgument("settingId")
+                )
+            )
         ;
         model.getMutationType()
             .dataFetcher("rmCreateResource",
@@ -124,6 +131,21 @@ public class WebServiceBindingRM extends WebServiceBindingBase<DBWServiceRM> {
                 env.getArgument("subjectIds"),
                 env.getArgument("permissions")
             ))
+            .dataFetcher(
+                "rmAddUserProjectSettings", env -> getService(env).addProjectSettings(
+                    getWebSession(env),
+                    env.getArgument("projectId"),
+                    env.getArgument("settings")
+                )
+            )
+            .dataFetcher(
+                "rmDeleteUserProjectSettings", env -> getService(env).deleteProjectSettings(
+                    getWebSession(env),
+                    env.getArgument("projectId"),
+                    env.getArgument("settingIds")
+                )
+            )
+
         ;
     }
 }
