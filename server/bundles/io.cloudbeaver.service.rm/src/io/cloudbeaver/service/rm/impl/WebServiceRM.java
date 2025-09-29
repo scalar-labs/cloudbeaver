@@ -31,6 +31,7 @@ import org.jkiss.dbeaver.DBException;
 import org.jkiss.dbeaver.Log;
 import org.jkiss.dbeaver.model.rm.RMController;
 import org.jkiss.dbeaver.model.rm.RMProject;
+import org.jkiss.dbeaver.model.rm.RMProjectInfo;
 import org.jkiss.dbeaver.model.rm.RMResource;
 import org.jkiss.dbeaver.model.secret.DBSSecretController;
 import org.jkiss.dbeaver.model.security.*;
@@ -263,6 +264,31 @@ public class WebServiceRM implements DBWServiceRM {
             return rmProject;
         } catch (DBException e) {
             throw new DBWebException("Error creating project", e);
+        }
+    }
+
+    @Override
+    public RMProject updateProject(
+        @NotNull WebSession session,
+        @NotNull String projectId,
+        @Nullable String name,
+        @Nullable String description
+    ) throws DBWebException {
+        try {
+            var project = session.getProjectById(projectId);
+            if (project == null) {
+                throw new DBException("Project not found: " + projectId);
+            }
+            RMProjectInfo projectInfo = new RMProjectInfo(name, description);
+            RMProject rmProject = getResourceController(session).updateProject(projectId, projectInfo);
+            project.updateProject(rmProject.getName(), rmProject.getDescription());
+
+            ServletAppUtils.getServletApplication().getEventController().addEvent(
+                WSProjectUpdateEvent.update(session.getSessionId(), session.getUserId(), rmProject.getId(), projectInfo)
+            );
+            return project.getRMProject();
+        } catch (DBException e) {
+            throw new DBWebException("Error updating project", e);
         }
     }
 
