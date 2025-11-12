@@ -20,6 +20,7 @@ import io.cloudbeaver.DBWebException;
 import io.cloudbeaver.model.WebAsyncTaskInfo;
 import io.cloudbeaver.model.WebConnectionInfo;
 import io.cloudbeaver.model.session.WebSession;
+import io.cloudbeaver.model.session.WebSessionPreferenceStore;
 import io.cloudbeaver.model.session.WebSessionProvider;
 import io.cloudbeaver.server.WebAppUtils;
 import io.cloudbeaver.server.jobs.SqlOutputLogReaderJob;
@@ -231,7 +232,7 @@ public class WebSQLProcessor implements WebSessionProvider {
                 if (useEvents) {
                     boolean isConfirmed = confirmQueryIfNeeded(mainQuery.getScriptElements(), asyncTask, isGenerated);
                     if (!isConfirmed) {
-                        throw new DBWebException("Query execution cancelled by user");
+                        throw new DBWebException("Query execution was cancelled by user");
                     }
                 }
 
@@ -1257,7 +1258,6 @@ public class WebSQLProcessor implements WebSessionProvider {
         return convertInputCellValue(dbcSession, allAttributes, cellRow, withoutExecution);
     }
 
-    // TODO: Refactor to unify with desktop when confirmation settings will be added
     private boolean confirmQueryIfNeeded(
         @NotNull List<SQLScriptElement> scriptElements,
         @NotNull WebAsyncTaskInfo asyncTask,
@@ -1285,25 +1285,28 @@ public class WebSQLProcessor implements WebSessionProvider {
                 .map(SQLScriptElement::getText)
                 .collect(Collectors.joining("\n\n"));
         } else {
+            WebSessionPreferenceStore store = webSession.getUserPreferenceStore();
+            boolean confirmDangerousQueries = store.getUserPreferenceBoolean(ConfirmationConstants.CONFIRM_DANGER_SQL_KEY, true);
+            boolean confirmDropQueries = store.getUserPreferenceBoolean(ConfirmationConstants.CONFIRM_DROP_SQL_KEY, true);
             for (SQLScriptElement scriptElement : scriptElements) {
                 if (scriptElement instanceof SQLQuery sqlQuery) {
-                    if (sqlQuery.isDeleteUpdateDangerous()) {
+                    if (confirmDangerousQueries && sqlQuery.isDeleteUpdateDangerous()) {
                         hasDangerousUpdates = true;
                         ConfirmationDescriptor descriptor = ConfirmationRegistry.getInstance()
-                            .getConfirmation(ConfirmationConstants.CONFIRM_DANGER_SQL);
+                            .getConfirmation(ConfirmationConstants.CONFIRM_DANGER_SQL_ID);
                         title = descriptor.getLocalizedTitle(webSession.getLocale());
                         var entityMetadata = sqlQuery.getEntityMetadata(false);
                         message = MessageFormat.format(
                             descriptor.getLocalizedMessage(webSession.getLocale()),
                             sqlQuery.getType().name(),
-                            entityMetadata != null ? entityMetadata.getEntityName() : null
+                            entityMetadata != null ? entityMetadata.getEntityName() : "multiple tables"
                         );
                         break;
                     }
-                    if (sqlQuery.isDropTableDangerous()) {
+                    if (confirmDropQueries && sqlQuery.isDropTableDangerous()) {
                         hasDropStatement = true;
                         ConfirmationDescriptor descriptor = ConfirmationRegistry.getInstance()
-                            .getConfirmation(ConfirmationConstants.CONFIRM_DROP_SQL);
+                            .getConfirmation(ConfirmationConstants.CONFIRM_DROP_SQL_ID);
                         title = descriptor.getLocalizedTitle(webSession.getLocale());
                         message = descriptor.getLocalizedMessage(webSession.getLocale());
                         break;
