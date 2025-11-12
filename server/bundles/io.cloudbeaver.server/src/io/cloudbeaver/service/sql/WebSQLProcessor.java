@@ -63,7 +63,6 @@ import org.jkiss.utils.ArrayUtils;
 import org.jkiss.utils.CommonUtils;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -293,8 +292,6 @@ public class WebSQLProcessor implements WebSessionProvider {
                                     sqlOutputLogReaderJob.join();
                                 }
                                 fillQueryResults(contextInfo, dataContainer, dbStat, hasResultSet, executeInfo, webDataFilter, dataFilter, dataFormat);
-                            } catch (DBException e) {
-                                throw new InvocationTargetException(e);
                             }
                         }
                     }
@@ -359,8 +356,6 @@ public class WebSQLProcessor implements WebSessionProvider {
                         resultSet.getResultsInfo().setQueryText(statistics.getQueryText());
                         executeInfo.setStatusMessage(resultSet.getRowsWithMetaData().size() + " row(s) fetched");
                     }
-                } catch (DBException e) {
-                    throw new InvocationTargetException(e);
                 }
             }
         });
@@ -903,8 +898,6 @@ public class WebSQLProcessor implements WebSessionProvider {
                     DBCQueryPlannerConfiguration planConfig = new DBCQueryPlannerConfiguration();
                     planConfig.getParameters().putAll(configuration);
                     dbcPlan[0] = planner.planQueryExecution(session, sql, planConfig);
-                } catch (DBException e) {
-                    throw new InvocationTargetException(e);
                 }
             });
         } catch (DBException e) {
