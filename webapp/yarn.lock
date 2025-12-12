@@ -1519,7 +1519,9 @@ __metadata:
     "@cloudbeaver/core-cli": "workspace:*"
     "@cloudbeaver/core-di": "workspace:*"
     "@cloudbeaver/core-executor": "workspace:*"
+    "@cloudbeaver/core-localization": "workspace:*"
     "@cloudbeaver/tsconfig": "workspace:*"
+    "@dbeaver/react-translate": "workspace:*"
     "@types/react": "npm:^19"
     "@types/react-dom": "npm:^19"
     mobx: "npm:^6"
@@ -4863,6 +4865,7 @@ __metadata:
   dependencies:
     "@dbeaver/js-helpers": "workspace:*"
     "@dbeaver/react-dnd": "workspace:^"
+    "@dbeaver/react-translate": "workspace:^"
     "@dbeaver/tsconfig": "workspace:^"
     "@dbeaver/ui-kit": "workspace:^"
     "@types/react": "npm:^19"
@@ -4906,7 +4909,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@dbeaver/react-translate@workspace:^, @dbeaver/react-translate@workspace:common-react/@dbeaver/react-translate":
+"@dbeaver/react-translate@workspace:*, @dbeaver/react-translate@workspace:^, @dbeaver/react-translate@workspace:common-react/@dbeaver/react-translate":
   version: 0.0.0-use.local
   resolution: "@dbeaver/react-translate@workspace:common-react/@dbeaver/react-translate"
   dependencies:
