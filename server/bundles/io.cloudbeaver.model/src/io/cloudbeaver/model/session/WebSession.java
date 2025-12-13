@@ -1034,7 +1034,7 @@ public class WebSession extends BaseWebSession
         }
 
         @Override
-        public void subTask(String name) {
+        public void subTask(@NotNull String name) {
             addInfoMessage(name);
         }
     }

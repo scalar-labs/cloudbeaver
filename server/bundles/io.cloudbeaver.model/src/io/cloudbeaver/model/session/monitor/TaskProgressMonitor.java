@@ -47,7 +47,7 @@ public class TaskProgressMonitor extends ProxyProgressMonitor {
     }
 
     @Override
-    public void subTask(String name) {
+    public void subTask(@NotNull String name) {
         super.subTask(name);
         asyncTask.setStatus(name);
         WebEventUtils.sendAsyncTaskEvent(webSession, asyncTask);
