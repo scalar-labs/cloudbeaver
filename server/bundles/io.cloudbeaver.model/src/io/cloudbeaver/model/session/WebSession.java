@@ -1029,7 +1029,7 @@ public class WebSession extends BaseWebSession
 
     private class SessionProgressMonitor extends BaseProgressMonitor {
         @Override
-        public void beginTask(String name, int totalWork) {
+        public void beginTask(@NotNull String name, int totalWork) {
             addInfoMessage(name);
         }
 
