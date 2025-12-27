@@ -224,19 +224,6 @@ public class CBEmbeddedSecurityController<T extends ServletAuthApplication>
         return sList;
     }
 
-    @Override
-    public void deleteObjectSettings(
-        @NotNull String projectId,
-        @NotNull SMObjectType objectType, @NotNull String objectId,
-        @Nullable Set<String> settingIds
-    ) throws DBException {
-        try (Connection dbCon = database.openConnection()) {
-            deleteObjectSettings(dbCon, projectId, objectId, objectType, settingIds);
-        } catch (SQLException e) {
-            throw new DBCException("Error while deleting object settings", e);
-        }
-    }
-
     private void deleteObjectSettings(
         @NotNull Connection dbCon,
         @NotNull String projectId,
