@@ -282,7 +282,8 @@ public abstract class CBApplication<T extends CBServerConfig>
             determineLocalAddresses();
             log.debug("\tLocal host addresses:");
             for (InetAddress ia : localInetAddresses) {
-                log.debug("\t\t" + ia.getHostAddress() + " (" + ia.getCanonicalHostName() + ")");
+                log.debug("\t\t" + ia.getHostAddress() +
+                    (Objects.equals(ia.getHostAddress(), ia.getCanonicalHostName()) ? "" : (" (" + ia.getCanonicalHostName() + ")")));
             }
         }
         {
