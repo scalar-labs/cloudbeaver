@@ -86,8 +86,6 @@ public abstract class CBApplication<T extends CBServerConfig>
      */
     private static final long CONFIGURATION_MODE_SESSION_IDLE_TIME = 60 * 60 * 1000 * 24 * 7;
 
-    private CloudBeaverInstanceServer instanceServer;
-
     static {
         Log.setDefaultDebugStream(System.out);
     }
@@ -207,7 +205,7 @@ public abstract class CBApplication<T extends CBServerConfig>
     @Override
     protected void startServer() {
         try {
-            this.instanceServer = createInstanceServer();
+            createInstanceServer();
         } catch (Exception e) {
             log.error("Error initializing instance server", e);
         }
