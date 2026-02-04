@@ -2,7 +2,7 @@
 
 # CloudBeaver Community Edition with Support for ScalarDB
 
-CloudBeaver is a light modern web-application for the database management. Out-of-the-box CloudBeaver supports various SQL, NoSQL and BigData data sources. This repository provides a forked version that supports ScalarDB and free to use and open-source (licensed under [Apache 2](https://github.com/dbeaver/cloudbeaver/blob/devel/LICENSE) license). See the original [repository](https://github.com/dbeaver/cloudbeaver/) and [WIKI](https://github.com/dbeaver/cloudbeaver/wiki) for more details about CloudBeaver.
+CloudBeaver is a light modern web-application for the database management. Out-of-the-box CloudBeaver supports various SQL, NoSQL and BigData data sources. This repository provides a forked version that supports ScalarDB and is free to use and open-source (licensed under [Apache 2](https://github.com/dbeaver/cloudbeaver/blob/devel/LICENSE) license). See the original [repository](https://github.com/dbeaver/cloudbeaver/) and [WIKI](https://github.com/dbeaver/cloudbeaver/wiki) for more details about CloudBeaver.
 
 <a><img src="./docs/images/connection-creation-demo.png" width="400"/></a>
 <img src="./docs/images/data-editor-demo.png" width="400"/>
