@@ -41,5 +41,6 @@ CloudBeaver is a light modern web-application for the database management. Out-o
 
 ## Known Limitations
 
-- In SQL, [BEGIN](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#begin) is not supported, so use [START TRANSACTION](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#start-transaction) instead.
+- Due to a limitation in how CloudBeaver's SQL editor parses scripts, [BEGIN](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#begin) may not work as expected when executing multiple statements. Use [START TRANSACTION](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#start-transaction instead), which is the SQL-standard command, instead.
+- Data in the `DATE` and `TIME` type columns cannot be displayed, although you can insert data correctly.
 - When editing data using [Data editor](https://github.com/dbeaver/cloudbeaver/wiki/Data-editor), integers can only be edited if they are of `BigInt` type.
