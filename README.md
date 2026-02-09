@@ -41,6 +41,7 @@ CloudBeaver is a light modern web-application for the database management. Out-o
 
 ## Known Limitations
 
+- The cross-partition scan must be enabled to view records in [Data editor](https://github.com/dbeaver/cloudbeaver/wiki/Data-editor). It is enabled by default; however, using it in a production environment is not recommended for non-JDBC databases due to potential consistency issues. For details, see [SELECT](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar/#select) in [ScalarDB SQL Grammar](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar/).
+- [Data editor](https://github.com/dbeaver/cloudbeaver/wiki/Data-editor) supports viewing data, but only inserting new rows is supported for modifications; updating and deleting existing rows are not supported. Additionally, integers can only be inserted if they are of `BigInt` type.
 - Due to a limitation in how CloudBeaver's SQL editor parses scripts, [BEGIN](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#begin) may not work as expected when executing multiple statements. Use [START TRANSACTION](https://scalardb.scalar-labs.com/docs/latest/scalardb-sql/grammar#start-transaction instead), which is the SQL-standard command, instead.
 - Data in the `DATE` and `TIME` type columns cannot be displayed, although you can insert data correctly.
-- When editing data using [Data editor](https://github.com/dbeaver/cloudbeaver/wiki/Data-editor), integers can only be edited if they are of `BigInt` type.
