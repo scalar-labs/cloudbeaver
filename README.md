@@ -37,7 +37,7 @@ CloudBeaver is a light modern web-application for the database management. Out-o
 - Once CloudBeaver is running, access http://localhost:8978/ and complete the setup based on [Administration](https://github.com/dbeaver/cloudbeaver/wiki/Administration).
 - When creating a new connection setting, you will see ScalarDB in the database list and select it.
 - Keep the file path in the Host field as is in the connection setting, and only change the Connection name as desired.
-- If prompted for credentials when establishing the connection, no input is required unless Authentication is enabled (even when Authentication is enabled, no input is required if username/password are specified in the configuration file).
+- If prompted for credentials when establishing the connection, input a username and a password of a ScalarDB user. You can leave them empty if authentication is disabled or they are specified in the configuration file.
 
 ## Known Limitations
 
