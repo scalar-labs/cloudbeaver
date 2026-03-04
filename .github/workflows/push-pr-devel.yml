@@ -15,19 +15,34 @@ concurrency:
 
 jobs:
   build-server:
-    uses: dbeaver/dbeaver-common/.github/workflows/mvn-package.yml@devel
-    name: Check
-    secrets: inherit
-    with:
-      mvn-args: -Dplain-api-server -Dheadless-platform
-      project-directory: ./cloudbeaver/server/product/aggregate
-      project-deps: ./cloudbeaver/project.deps
-      timeout-minutes: 5
+    name: Check / Build Java
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      MAVEN_OPTS: -Xmx2048m
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: cloudbeaver
 
-  # build-server:
-  #   name: Server
-  #   uses: ./.github/workflows/backend-build.yml
-  #   secrets: inherit
+      - name: Clone dependencies
+        run: |
+          git clone --depth 1 -b main https://github.com/scalar-labs/dbeaver.git
+          git clone --depth 1 -b main https://github.com/scalar-labs/dbeaver-common.git
+          git clone --depth 1 https://github.com/dbeaver/dbeaver-jdbc-libsql.git
+
+      - uses: dbeaver/github-actions/install-maven@devel
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: '**/pom.xml'
+
+      - name: Build
+        run: mvn clean verify -B -T1C -Dplain-api-server -Dheadless-platform
+        working-directory: ./cloudbeaver/server/product/aggregate
 
   build-frontend:
     name: Frontend
@@ -36,7 +51,7 @@ jobs:
 
   lint-server:
     name: Server
-    uses: dbeaver/dbeaver-common/.github/workflows/java-checkstyle.yml@devel
+    uses: scalar-labs/dbeaver-common/.github/workflows/java-checkstyle.yml@main
     secrets: inherit
 
   lint-frontend:

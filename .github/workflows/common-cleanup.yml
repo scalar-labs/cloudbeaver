@@ -10,5 +10,5 @@ on:
 jobs:
   delete-caches:
     name: Cleanup
-    uses: dbeaver/dbeaver-common/.github/workflows/cleanup-caches.yml@devel
+    uses: scalar-labs/dbeaver-common/.github/workflows/cleanup-caches.yml@main
     secrets: inherit
